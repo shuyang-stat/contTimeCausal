@@ -1,0 +1,11 @@
+Package: contTimeCausal
+Type: Package
+Title: Continuous Time Causal Models
+Version: 0.1
+Date: 2019-02-14
+Author: Shu Yang
+Maintainer: Shu Yang <syang24@ncsu.edu>
+Description: This package implements the semiparametric efficient estimators of continuous-time causal models for time-varying treatments and confounders in the presence of dependent censoring (including structural failure time model and Cox proportional hazards marginal structural model); see, S. Yang, K. Pieper, and F. Cools (2019).
+License: GPL (>=2)
+LazyData: TRUE
+Depends: MASS,survival,zoo
