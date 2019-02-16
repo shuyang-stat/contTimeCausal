@@ -1,12 +1,12 @@
 {
-    "contents" : "---\ntitle: \"Continuous Time Causal Model Demo\"\noutput: html_document\n---\n",
+    "contents" : "---\ntitle: \"Continuous Time Causal Model Demo\"\noutput: html_document\n---\n\nThe code below demonstrates\n",
     "created" : 1550284134852.000,
     "dirty" : false,
     "encoding" : "UTF-8",
     "folds" : "",
-    "hash" : "1172132563",
+    "hash" : "1394512174",
     "id" : "BBD2FA39",
-    "lastKnownWriteTime" : 1550284371,
+    "lastKnownWriteTime" : 1550285029,
     "path" : "~/contTimeCausal/README.Rmd",
     "project_path" : "README.Rmd",
     "properties" : {
