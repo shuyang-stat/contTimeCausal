@@ -36,7 +36,7 @@ where $\thicksim$ means "has the same distribution as", and $A_u$ is the treatme
 The ctCoxMSM assumes that the potential failure time 
 $T^{\overline{a}}$ under the treatment regime $\overline{a}$ (a hypothetical treatment regime from baseline to the event time) follows a proportional hazards model with the hazard function at $u$ as $$\lambda_0(u)e^{\psi\times a_u}.$$
 
-We assume that the individual continuously received treatment until time $V$. The observed failure time can be censored. We assume an ignorable censoring mechanism in the sense that the censoring time is independent of the failure time given the treatment and covariate history. The stSFTM() returns [a continuous-time g-estimator] (https://arxiv.org/abs/1808.06408)
+We assume that the individual continuously received treatment until time $V$. The observed failure time can be censored. We assume an ignorable censoring mechanism in the sense that the censoring time is independent of the failure time given the treatment and covariate history. The stSFTM() returns [a continuous-time g-estimator](https://arxiv.org/abs/1808.06408)
 of $\psi$ and the ctCoxMSM() returns [an inverse probability of treatment weighting estimator](https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12845) of $\psi$.
 
 The current function provides a template to handle one-dimensional baseline covariate and one-dimensional time-dependent covariate; extension to handling multiple baseline  and  time-dependent covariates is possible. Variance estimation should be implemented by delete-one-group jackknifing and recalling ctSFTM or ctCoxMSM.
