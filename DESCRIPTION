@@ -9,3 +9,4 @@ Description: This package implements the semiparametric efficient estimators of 
 License: GPL (>=2)
 LazyData: TRUE
 Depends: MASS,survival,zoo
+RoxygenNote: 6.1.1

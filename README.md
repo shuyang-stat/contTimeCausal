@@ -7,8 +7,6 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 
-
-
 # Continuous Time Causal Models
 
 
@@ -24,8 +22,6 @@ devtools::install_github("shuyang1987/contTimeCausal")
 ```
 
 ## Description
-
-
 
 
 Structural failure time models (SFTM) and Cox marginal structural models (MSM) are causal models for estimating the effect of time-varying treatments on a survival outcome. 

@@ -27,7 +27,7 @@
 #'
 #' \code{est}: estimate of the Cox MSM parameter
 #'
-#'
+#' @importFrom stats lm
 #' @import survival MASS zoo
 #'
 #' @details
@@ -43,7 +43,7 @@
 #'@references
 #'Yang, S., A. A. Tsiatis, and M. Blazing (2018). Modeling survival distribution as a function of time to treatment discontinuation: a dynamic treatment regime approach, Biometrics,
 #' 74, 900--909.
-#' \url{https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12845}
+#' \url{https://doi.org/10.1111/biom.12845}
 #'
 #'Yang, S., K. Pieper, and F. Cools. (2019) Semiparametric estimation of structural failure time model in continuous-time processes.
 #'   \url{https://arxiv.org/abs/1808.06408}
@@ -71,13 +71,13 @@
 #'    }
 #'  }
 #'
-#'  ## Vtd represents the values of covariate at times t1=0, t2=5, and t3=10.
+#'  ## Ltd represents the values of covariate at times t1=0, t2=5, and t3=10.
 #'  ## We assume that the time-dependent variable remains constant between measurements.
 #'
-#'  Vtdtemp<-mvrnorm(n = n, rep(0,3), Sigma)
-#'  Vtd<-Vtdtemp
+#'  Ltdtemp<-mvrnorm(n = n, rep(0,3), Sigma)
+#'  Ltd<-Ltdtemp
 #'  t<-c(0,5,10,100)
-#'  colnames(Vtd)<-paste("t",1:3,sep="")
+#'  colnames(Ltd)<-paste("t",1:3,sep="")
 #'
 #'  ## generate time-to-events
 #'  ## D =time to death if never stop treatment (time-indep Cox)
@@ -88,19 +88,19 @@
 #'
 #'  D<-rexp(n=n,0.2)
 #'
-#'  Vtd<-Vtdtemp+ matrix((D-20)/5,n,3,byrow=FALSE)
-#'  colnames(Vtd)<-paste("t",1:3,sep="")
+#'  Ltd<-Ltdtemp+ matrix((D-20)/5,n,3,byrow=FALSE)
+#'  colnames(Ltd)<-paste("t",1:3,sep="")
 #'
 #'  ## generate V according to a tme-dept Cox using Bender et al (2005)
 #'
 #'  lambdaV <- 0.15;  betaV <- c(0.15,0.15)
 #'
 #'  v  <- runif(n=n)
-#'  temp1 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Vtd[,1]) %*% betaV)))
+#'  temp1 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Ltd[,1]) %*% betaV)))
 #'  v  <- runif(n=n)
-#'  temp2 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Vtd[,2]) %*% betaV)))
+#'  temp2 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Ltd[,2]) %*% betaV)))
 #'  v  <- runif(n=n)
-#'  temp3 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Vtd[,3]) %*% betaV)))
+#'  temp3 <- (- log(1-v) / (lambdaV * exp(cbind(Lti,Ltd[,3]) %*% betaV)))
 #'  id1<-(temp1 < t[2])
 #'  id2<-(temp2 < (t[3]-t[2]))
 #'  id3<-(temp3 < (t[4]-t[3]))
@@ -161,9 +161,9 @@
 #'  id2<-((obsV.times < t[3])&(obsV.times > t[2]))
 #'  id3<- (obsV.times > t[3])
 #'  Ltd4Vtime<-matrix(NA,nrow=n,ncol=ltime)
-#'  Ltd4Vtime[,which(id1==1)]<-Vtd[,1]
-#'  Ltd4Vtime[,which(id2==1)]<-Vtd[,2]
-#'  Ltd4Vtime[,which(id3==1)]<-Vtd[,3]
+#'  Ltd4Vtime[,which(id1==1)]<-Ltd[,1]
+#'  Ltd4Vtime[,which(id2==1)]<-Ltd[,2]
+#'  Ltd4Vtime[,which(id3==1)]<-Ltd[,3]
 #'
 #'  ## Ltd4Utime is a n x ltimeU matrix consisting of the time-dependent cov
 #'  ## each row represents each indiviudal
@@ -178,9 +178,9 @@
 #'  id2<-((obsU.times < t[3])&(obsU.times > t[2]))
 #'  id3<- (obsU.times > t[3])
 #'  Ltd4Utime<-matrix(NA,nrow=n,ncol=ltimeU)
-#'  Ltd4Utime[,which(id1==1)]<-Vtd[,1]
-#'  Ltd4Utime[,which(id2==1)]<-Vtd[,2]
-#'  Ltd4Utime[,which(id3==1)]<-Vtd[,3]
+#'  Ltd4Utime[,which(id1==1)]<-Ltd[,1]
+#'  Ltd4Utime[,which(id2==1)]<-Ltd[,2]
+#'  Ltd4Utime[,which(id3==1)]<-Ltd[,3]
 #'
 #'  true
 #'   contTimeCausal::ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
@@ -191,7 +191,7 @@
 ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
 
   n<-length(V)
-
+  weight<-NULL
   ## Fit a time-dependent Cox proportional hazards model for V:
   ## The baseline hazard function estimated by "survfit.coxph"
   ## is the hazard when all covariates are equal to their sample means.
@@ -213,7 +213,7 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
   ## This step fits a time-dependent Cox PH model
   ## creat time-dependent covariate
 
-  cnames<-c("patnum","start","stop","deltaD","deltaV","V","D.time","V.time","Lti","Vtd")
+  cnames<-c("patnum","start","stop","deltaD","deltaV","V","D.time","V.time","Lti","Ltd")
   dataforTDcoxPH<-matrix(0,(ltime)*n,length(cnames))
   colnames(dataforTDcoxPH)<-cnames
   dataforTDcoxPH[,"start"]   <-c(0,obsV.times[1:(ltime-1)])
@@ -230,19 +230,19 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
     (dataforTDcoxPH[,"V"]<=dataforTDcoxPH[,"stop"])*
     (dataforTDcoxPH[,"deltaV"]==1)
 
-  dataforTDcoxPH[,"Vtd"]<-as.vector(t(Ltd4Vtime))
+  dataforTDcoxPH[,"Ltd"]<-as.vector(t(Ltd4Vtime))
   retain<-which( (dataforTDcoxPH[,"V"]>dataforTDcoxPH[,"start"]) )
   dataforTDcoxPH<-dataforTDcoxPH[retain,]
   dataforTDcoxPH.list<-list(start=dataforTDcoxPH[,"start"],
                             stop=dataforTDcoxPH[,"stop"],
                             V.time=dataforTDcoxPH[,"V.time"],
                             Lti=dataforTDcoxPH[,"Lti"]-mean(dataforTDcoxPH[,"Lti"]),
-                            Vtd=dataforTDcoxPH[,"Vtd"]-mean(dataforTDcoxPH[,"Vtd"]))
+                            Ltd=dataforTDcoxPH[,"Ltd"]-mean(dataforTDcoxPH[,"Ltd"]))
   Lti4Ltime<-Lti
   Lti4Ltime<-Lti4Ltime-mean(dataforTDcoxPH[,"Lti"])
-  Ltd4Vtime<-Ltd4Vtime-mean(dataforTDcoxPH[,"Vtd"])
+  Ltd4Vtime<-Ltd4Vtime-mean(dataforTDcoxPH[,"Ltd"])
 
-  fit<- coxph(Surv(start, stop, V.time) ~Lti+Vtd,
+  fit<- coxph(Surv(start, stop, V.time) ~Lti+Ltd,
               data=dataforTDcoxPH.list)
   gammahat1<-fit$coefficients
   fit$coefficient
@@ -300,7 +300,7 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
   obsU.times<-ss$time[ss$n.event==1]
   ltimeU<-length(obsU.times)
 
-  cnames<-c("patnum","start","stop","deltaD","U","V","S.time","Z","Lti","Vtd")
+  cnames<-c("patnum","start","stop","deltaD","U","V","S.time","Z","Lti","Ltd")
   dataforTScoxPH<-matrix(0,(ltimeU)*n,length(cnames))
   colnames(dataforTScoxPH)<-cnames
   dataforTScoxPH[,"start"]   <-c(0,obsU.times[1:(ltimeU-1)])
@@ -316,7 +316,7 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
     (dataforTScoxPH[,"deltaD"]==0)
 
   Lti4Utime<-Lti
-  dataforTScoxPH[,"Vtd"]<-as.vector(t(Ltd4Utime))
+  dataforTScoxPH[,"Ltd"]<-as.vector(t(Ltd4Utime))
 
   retain<-which( (dataforTScoxPH[,"U"]>dataforTScoxPH[,"start"]) )
   dataforTScoxPH<-dataforTScoxPH[retain,]
@@ -325,10 +325,10 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
                             stop=dataforTScoxPH[,"stop"],
                             S.time=dataforTScoxPH[,"S.time"],
                             Lti=dataforTScoxPH[,"Lti"]-mean(dataforTScoxPH[,"Lti"]),
-                            Vtd=dataforTScoxPH[,"Vtd"]-mean(dataforTScoxPH[,"Vtd"]),
+                            Ltd=dataforTScoxPH[,"Ltd"]-mean(dataforTScoxPH[,"Ltd"]),
                             Z=dataforTScoxPH[,"Z"])
   Lti4Utime<-Lti4Utime-mean(dataforTScoxPH[,"Lti"])
-  Ltd4Utime<-Ltd4Utime-mean(dataforTScoxPH[,"Vtd"])
+  Ltd4Utime<-Ltd4Utime-mean(dataforTScoxPH[,"Ltd"])
 
   fit<- coxph(Surv(start, stop, S.time) ~Lti+Z,
               data=dataforTScoxPH.list)
