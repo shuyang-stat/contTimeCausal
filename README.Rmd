@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# Continuous time causal models
+# Continuous Time Causal Models
 
 
 ### Continuous-time Causal Models for evaluating the effect of time-varying treatments  
@@ -29,7 +29,7 @@ We assume that the individual continuously received treatment until time \eqn{V}
 The observed failure time can be censored assuming the censoring time is independent of the failure time given the treatment and covariate history (the so-called ignorable censoring).
 The current function provides a template to handle one-dimensional baseline covariate and one-dimensional time-dependent covariate;
 extension to handling multiple baseline  and  time-dependent covariates is possible.
-Variance estimate should be implemented by delete-one-group jackknifing and recalling ctCoxMSM.
+Variance estimate should be implemented by delete-one-group jackknifing and recalling ctSFTM or ctCoxMSM.
 
 
 
