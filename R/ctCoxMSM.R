@@ -513,8 +513,7 @@ ctCoxMSM<-function(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime){
   beta<-fit$coefficients
   beta
   est<-exp(beta)
-
-  est
+  est<-as.numeric(est)
 
   return(list(est=est))
 }

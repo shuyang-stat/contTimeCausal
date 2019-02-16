@@ -182,7 +182,7 @@ library("zoo")
  Ltd4Utime[,which(id3==1)]<-Vtd[,3]
 
  true
- ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
+  contTimeCausal::ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
 }
 \references{
 Yang, S., A. A. Tsiatis, and M. Blazing (2018). Modeling survival distribution as a function of time to treatment discontinuation: a dynamic treatment regime approach, Biometrics,

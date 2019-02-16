@@ -10,8 +10,7 @@
 
 # Continuous Time Causal Models
 
-
-### Continuous-time Causal Models for evaluating the effect of time-varying treatments  
+### Continuous-time causal models for evaluating the effect of time-varying treatments  
 
 ### Visit the [package website](https://github.com/shuyang1987/contTimeCausal)
 
@@ -24,16 +23,27 @@ devtools::install_github("shuyang1987/contTimeCausal")
 
 ## Description
 
-The Cox MSM assumes that the potential failure time \eqn{T^{\overline{a}}} under the treatment \eqn{\overline{a}} follows a proportional hazards model with \eqn{\psi*a_u}.
-We assume that the individual continuously received treatment until time \eqn{V}.
-The observed failure time can be censored assuming the censoring time is independent of the failure time given the treatment and covariate history (the so-called ignorable censoring).
-The current function provides a template to handle one-dimensional baseline covariate and one-dimensional time-dependent covariate;
-extension to handling multiple baseline  and  time-dependent covariates is possible.
-Variance estimate should be implemented by delete-one-group jackknifing and recalling ctSFTM or ctCoxMSM.
 
 
 
-### Main Paper: Yang et al. (2019) 
+Structural failure time models (SFTM) and Cox marginal structural models (MSM) are causal models for estimating the effect of time-varying treatments on a survival outcome. 
+This package provides a class of continuous-time structural failure time models (ctSFTM) and continuous-time Cox marginal structural models (ctCoxMSM), which respects the continuous time nature of the underlying data processes in practice (i.e. the variables and processes are measured at irregularly spaced time points, which are not necessarily the same for all subjects). 
+
+The ctSFTM assumes that the potential failure time $U$ had the individual never received treatment and the observed failure time $T$ follow
+$$U \thicksim \int_0^T e^{\psi\times A_u}d u, $$
+where $\thicksim$ means "has the same distribution as", and $A_u$ is the treatment indicator at time $u$.
+
+The ctCoxMSM assumes that the potential failure time 
+$T^{\overline{a}}$ under the treatment regime $\overline{a}$ (a hypothetical treatment regime from baseline to the event time) follows a proportional hazards model with the hazard function at $u$ as $$\lambda_0(u)e^{\psi\times a_u}.$$
+
+We assume that the individual continuously received treatment until time $V$. The observed failure time can be censored. We assume an ignorable censoring mechanism in the sense that the censoring time is independent of the failure time given the treatment and covariate history. The stSFTM() returns [a continuous-time g-estimator] (https://arxiv.org/abs/1808.06408)
+of $\psi$ and the ctCoxMSM() returns [an inverse probability of treatment weighting estimator](https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12845) of $\psi$.
+
+The current function provides a template to handle one-dimensional baseline covariate and one-dimensional time-dependent covariate; extension to handling multiple baseline  and  time-dependent covariates is possible. Variance estimation should be implemented by delete-one-group jackknifing and recalling ctSFTM or ctCoxMSM.
+
+
+
+### Main Papers: Yang et al. (2018) and Yang et al. (2019)
 
 Yang, S., K. Pieper, and F. Cools. (2019) Semiparametric estimation of structural failure time model in continuous-time processes. https://arxiv.org/abs/1808.06408
 
@@ -43,9 +53,9 @@ Yang, S., A. A. Tsiatis, and M. Blazing (2018). Modeling survival distribution a
 
 ## Use
 
-ctSFTM()   estimates the effect of treatment effect for a survival outcome under a SFTM with time-varying treatment and confounding in the presence of dependent censoring.
+ctSFTM()   estimates the effect of treatment effect for a survival outcome under a ctSFTM with time-varying treatment and confounding in the presence of dependent censoring.
 
-ctCoxMSM() estimates the effect of treatment effect for a survival outcome under a Cox proportional hazards model with time-varying treatment and confounding in the presence of dependent censoring.
+ctCoxMSM() estimates the effect of treatment effect for a survival outcome under a ctCoxMSM with time-varying treatment and confounding in the presence of dependent censoring.
 
 
 ### Toy example
@@ -196,8 +206,7 @@ library("zoo")
  contTimeCausal::ctSFTM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
 #> [1] 0.9923524
  contTimeCausal::ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
-#>        Z 
-#> 1.001188
+#> [1] 1.001188
 ```
 
 
