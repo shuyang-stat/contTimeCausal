@@ -22,6 +22,12 @@ knitr::opts_chunk$set(
 
 ### Visit the [package website](https://github.com/shuyang1987/contTimeCausal)
 
+## Installation with `devtools`:
+
+```{r, eval = FALSE}
+devtools::install_github("shuyang1987/contTimeCausal")
+```
+
 ## Description
 
 The Cox MSM assumes that the potential failure time \eqn{T^{\overline{a}}} under the treatment \eqn{\overline{a}} follows a proportional hazards model with \eqn{\psi*a_u}.
@@ -39,13 +45,6 @@ Yang, S., K. Pieper, and F. Cools. (2019) Semiparametric estimation of structura
 
 Yang, S., A. A. Tsiatis, and M. Blazing (2018). Modeling survival distribution as a function of time to treatment discontinuation: a dynamic treatment regime approach, *Biometrics*,
  72, 1055--1065. https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12845
-
-
-## Installation with `devtools`:
-
-```{r, eval = FALSE}
-devtools::install_github("shuyang1987/conTimeCausal")
-```
 
 
 ## Use
