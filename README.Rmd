@@ -3,4 +3,4 @@ title: "Continuous Time Causal Model Demo"
 output: html_document
 ---
 
-The code below demonstrates the function:
+The code below demonstrates the function ctCoxMSM:
