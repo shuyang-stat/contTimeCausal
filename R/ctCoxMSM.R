@@ -183,7 +183,7 @@
 #'  Ltd4Utime[,which(id3==1)]<-Vtd[,3]
 #'
 #'  true
-#'  ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
+#'   contTimeCausal::ctCoxMSM(V,deltaV,U,deltaD,Lti,Ltd4Vtime,Ltd4Utime)$est
 #'
 #'
 #' @export
