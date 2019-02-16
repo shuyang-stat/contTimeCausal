@@ -1,5 +1,5 @@
 ---
-  output: github_document
+  output: pdf_document
 ---
 
 <!-- rmarkdown v1 -->
@@ -11,7 +11,6 @@
 
 # Continuous Time Causal Models
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=1%2Bsin%28mc%5E2%29&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=)
 
 ### Continuous-time causal models for evaluating the effect of time-varying treatments  
 
