@@ -12,7 +12,11 @@
 
 ### Continuous-time causal models for evaluating the effect of time-varying treatments  
 
-### Visit the [package website](https://github.com/shuyang1987/contTimeCausal)
+### Disclaimer
+
+This R package/function is intended to provide a template for implementing the new methods. Modification of default options may be needed for a specific application. Please read the associated articles for method details.  
+
+To proficient R programmers are interested in advancing this R package, please contact me and I am happy to work together. 
 
 ## Installation with `devtools`:
 
