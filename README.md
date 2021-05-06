@@ -47,7 +47,7 @@ The current function provides a template to handle one-dimensional baseline cova
 
 ### Main Papers: Yang et al. (2018) and Yang et al. (2019)
 
-Yang, S., K. Pieper, and F. Cools. (2019) Semiparametric estimation of structural failure time model in continuous-time processes. https://arxiv.org/abs/1808.06408
+Yang, S., K. Pieper, and F. Cools (2020). Semiparametric estimation of structural failure time model in continuous-time processes, *Biometrika*, 107, 123--136. https://doi.org/10.1093/biomet/asz057
 
 Yang, S., A. A. Tsiatis, and M. Blazing (2018). Modeling survival distribution as a function of time to treatment discontinuation: a dynamic treatment regime approach, *Biometrics*,
  72, 1055--1065. https://onlinelibrary.wiley.com/doi/abs/10.1111/biom.12845
