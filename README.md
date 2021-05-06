@@ -45,7 +45,7 @@ The current function provides a template to handle one-dimensional baseline cova
 
 
 
-### Main Papers: Yang et al. (2018) and Yang et al. (2019)
+### Main Papers
 
 Yang, S., K. Pieper, and F. Cools (2020). Semiparametric estimation of structural failure time model in continuous-time processes, *Biometrika*, 107, 123--136. https://doi.org/10.1093/biomet/asz057
 
